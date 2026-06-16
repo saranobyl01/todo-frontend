@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   const loadTodos = async () => {
     try {
-      const data = await fetchApi('/todos?select=*&order=due_date.asc.nullslast');
+      const data = await fetchApi('/todos?sort=due_date');
       setTodos(data || []);
     } catch (err) {
       console.error('Failed to load todos', err);
@@ -35,7 +35,7 @@ export default function Dashboard() {
 
   const toggleComplete = async (todo: Todo) => {
     try {
-      await fetchApi(`/todos?id=eq.${todo.id}`, {
+      await fetchApi(`/todos/${todo.id}`, {
         method: 'PATCH',
         body: JSON.stringify({ is_completed: !todo.is_completed })
       });

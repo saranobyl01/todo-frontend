@@ -30,7 +30,7 @@ export default function Todos() {
 
   const loadTodos = async () => {
     try {
-      const data = await fetchApi('/todos?select=*&order=created_at.desc');
+      const data = await fetchApi('/todos');
       setTodos(data || []);
     } catch (err) {
       console.error(err);
@@ -67,7 +67,7 @@ export default function Todos() {
 
   const toggleComplete = async (todo: Todo) => {
     try {
-      await fetchApi(`/todos?id=eq.${todo.id}`, {
+      await fetchApi(`/todos/${todo.id}`, {
         method: 'PATCH',
         body: JSON.stringify({ is_completed: !todo.is_completed })
       });
@@ -79,7 +79,7 @@ export default function Todos() {
 
   const deleteTodo = async (id: string) => {
     try {
-      await fetchApi(`/todos?id=eq.${id}`, { method: 'DELETE' });
+      await fetchApi(`/todos/${id}`, { method: 'DELETE' });
       loadTodos();
     } catch (err) {
       console.error(err);

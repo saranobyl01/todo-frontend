@@ -19,7 +19,7 @@ export default function Settings() {
   const loadSettings = async () => {
     setLoading(true);
     try {
-      const data = await fetchApi(`/user_telegram?user_id=eq.${user?.id}`);
+      const data = await fetchApi(`/user_telegram`);
       if (data && data.length > 0) {
         setChatId(data[0].telegram_chat_id);
         setIsActive(data[0].is_active);
@@ -38,11 +38,11 @@ export default function Settings() {
     
     try {
       // Check if exists
-      const existing = await fetchApi(`/user_telegram?user_id=eq.${user?.id}`);
+      const existing = await fetchApi(`/user_telegram`);
       
       if (existing && existing.length > 0) {
         // Update
-        await fetchApi(`/user_telegram?user_id=eq.${user?.id}`, {
+        await fetchApi(`/user_telegram`, {
           method: 'PATCH',
           body: JSON.stringify({ telegram_chat_id: chatId, is_active: isActive })
         });
