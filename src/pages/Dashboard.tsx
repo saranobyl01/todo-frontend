@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchApi } from '../lib/api';
-import { useAuthStore } from '../store/authStore';
+
 import { format, isToday, isFuture, parseISO } from 'date-fns';
 import { Calendar, Clock, CheckCircle2, Circle } from 'lucide-react';
 
@@ -16,7 +16,7 @@ interface Todo {
 export default function Dashboard() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
-  const user = useAuthStore((state) => state.user);
+
 
   useEffect(() => {
     loadTodos();
