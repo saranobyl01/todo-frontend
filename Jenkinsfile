@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME   = 'myapp-frontend'
-        COMPOSE_FILE = '/opt/myapp/frontend/docker-compose.yml'
+        IMAGE_NAME   = 'todoapp-frontend'
+        COMPOSE_FILE = '/opt/todoapp/frontend/docker-compose.yml'
     }
 
     stages {
@@ -61,12 +61,12 @@ pipeline {
                 sh '''
                     echo "Waiting for frontend container to start..."
                     sleep 5
-                    STATUS=$(docker inspect --format="{{.State.Status}}" myapp-frontend 2>/dev/null || echo "unknown")
+                    STATUS=$(docker inspect --format="{{.State.Status}}" todoapp-frontend 2>/dev/null || echo "unknown")
                     if [ "$STATUS" = "running" ]; then
                         echo "Frontend container is running!"
                     else
                         echo "Frontend container status: $STATUS"
-                        docker logs myapp-frontend --tail 20
+                        docker logs todoapp-frontend --tail 20
                         exit 1
                     fi
                 '''
@@ -80,7 +80,7 @@ pipeline {
         }
         failure {
             echo "❌ Frontend pipeline failed — check console output above"
-            sh 'docker logs myapp-frontend --tail 50 || true'
+            sh 'docker logs todoapp-frontend --tail 50 || true'
         }
         always {
             // Clean up node_modules to keep Jenkins workspace lean
